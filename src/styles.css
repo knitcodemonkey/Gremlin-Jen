@@ -1,4 +1,94 @@
+:root {
+  --black-90: rgba(0, 0, 0, 0.9);
+  --black-70: rgba(0, 0, 0, 0.7);
+  --black-10: rgba(0, 0, 0, 0.1);
+  --black-5: rgba(0, 0, 0, 0.05);
+  --optimal: #bbb;
+  --quality: #29abe2;
+  --popularity: #8956ff;
+  --maintenance: #cb3837;
+  --max-width: 96rem;
+  --font-fira: 'Fira Mono', 'Andale Mono', 'Consolas',
+    monospace;
+  --font-source: 'Source Sans Pro', 'Lucida Grande',
+    sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 .App {
-  font-family: sans-serif;
-  text-align: center;
+  color: var(--black-90);
+  font-family: var(--font-source);
+}
+
+header {
+  display: block;
+  margin: auto;
+  max-width: var(--max-width);
+  padding: 2em;
+}
+
+aside,
+.content {
+  padding: 1em;
+  color: var(--black-70);
+}
+
+.content {
+  flex-grow: 1;
+}
+
+nav,
+.sidebar > div {
+  padding: 1em 0;
+  color: var(--black-70);
+}
+.optimal {
+  border-bottom: 1px solid var(--optimal);
+}
+.quality {
+  border-bottom: 1px solid var(--quality);
+}
+.popularity {
+  border-bottom: 1px solid var(--popularity);
+}
+.maintenance {
+  border-bottom: 1px solid var(--maintenance);
+}
+
+form,
+nav {
+  display: flex;
+}
+
+nav {
+  justify-content: space-between;
+}
+
+input {
+  background-color: var(--black-5);
+  width: calc(100% - 10px);
+  border: none;
+  font-family: var(--font-fira);
+  font-size: 14px;
+  padding: 1em;
+}
+
+input[type='submit'] {
+  background-color: var(--maintenance);
+  color: white;
+  font-family: var(--font-source);
+  width: 100px;
+}
+
+@media (min-width: 960px) {
+  main {
+    display: flex;
+    justify-content: space-between;
+  }
+  aside {
+    width: 20%;
+  }
 }
