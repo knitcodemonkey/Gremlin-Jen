@@ -33,7 +33,13 @@ const App = () => {
   return (
     <div className="App" css={{ color: 'darkgray' }}>
       <header>
-        <form onSubmit={() => fetchPackages(search)}>
+        <form
+          onSubmit={e => {
+            e.preventDefault()
+            e.stopPropagation()
+            fetchPackages(search)
+          }}
+        >
           <input
             type="text"
             placeholder="Search NPM"
