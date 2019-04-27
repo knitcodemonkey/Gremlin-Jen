@@ -4,50 +4,26 @@ import React from 'react'
 
 import distanceInWords from 'date-fns/distance_in_words'
 
-import '../styles.css'
+import './result.css'
 
 const Package = ({ data, score }) => {
   const oldness = new Date(data.date)
   console.log(oldness, distanceInWords(oldness, new Date()))
   return data ? (
-    <article
-      css={css`
-        padding: 20px 0;
-        border-bottom: 1px solid grey;
-        display: flex;
-        flex-direction: row;
-        justify-content: start;
-        line-height: 2em;
-      `}
-    >
+    <article>
       <section
         css={css`
           flex-grow: 1;
           margin-right: 20px;
         `}
       >
-        <div
-          css={css`
-            font-weight: bold;
-          `}
-        >
-          {data.name}
-        </div>
+        <div className="bold">{data.name}</div>
         <div className="description">
           {data.description}
         </div>
         <div className="tagsList">List of tags</div>
         {data.author ? (
-          <div
-            css={css`
-              display: flex;
-              justify-content: start;
-              align-items: center;
-              div {
-                margin-left: 10px;
-              }
-            `}
-          >
+          <div className="stats">
             <img
               css={css`
                 width: 16px;
@@ -74,32 +50,33 @@ const Package = ({ data, score }) => {
         css={css`
           flex-grow: 0;
           margin-left: 20px;
+          margin-top: 20px;
         `}
       >
-        <div>
-          p(opularity){' '}
+        <div className="stats bar">
+          p
           <div
+            className="bar popularity"
+            css={css`
+              width: ${score.detail.popularity * 50}px;
+            `}
+          />
+        </div>
+        <div className="stats bar">
+          q
+          <div
+            className="bar quality"
             style={{
-              width: `${score.detail.popularity * 50}px`,
-              color: 'teal'
+              width: `${score.detail.quality * 100}px`
             }}
           />
         </div>
-        <div>
-          q(uality){' '}
+        <div className="stats bar">
+          m
           <div
+            className="maintenance"
             style={{
-              width: `${score.detail.quality * 50}px`,
-              color: 'purple'
-            }}
-          />
-        </div>
-        <div>
-          m(aintenance){' '}
-          <div
-            style={{
-              width: `${score.detail.maintenance * 50}px`,
-              color: 'red'
+              width: `${score.detail.maintenance * 50}px`
             }}
           />
         </div>

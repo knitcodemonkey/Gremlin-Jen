@@ -1,18 +1,4 @@
-:root {
-  --black-90: rgba(0, 0, 0, 0.9);
-  --black-70: rgba(0, 0, 0, 0.7);
-  --black-10: rgba(0, 0, 0, 0.1);
-  --black-5: rgba(0, 0, 0, 0.05);
-  --optimal: #bbb;
-  --quality: #29abe2;
-  --popularity: #8956ff;
-  --maintenance: #cb3837;
-  --max-width: 96rem;
-  --font-fira: 'Fira Mono', 'Andale Mono', 'Consolas',
-    monospace;
-  --font-source: 'Source Sans Pro', 'Lucida Grande',
-    sans-serif;
-}
+@import './variables.css';
 
 * {
   box-sizing: border-box;
@@ -32,7 +18,7 @@ header {
 
 aside,
 .content {
-  padding: 2em;
+  padding: 0 2em;
   color: var(--black-70);
 }
 
