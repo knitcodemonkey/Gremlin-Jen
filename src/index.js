@@ -1,5 +1,3 @@
-/* @jsx jsx */
-import { jsx } from '@emotion/core'
 import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import Result from './components/Result'
@@ -22,7 +20,7 @@ function getPackages(str) {
   }
 
   useEffect(() => {
-    fetchPackages()
+    fetchPackages(str)
   }, [str])
 
   return [results, fetchPackages]
