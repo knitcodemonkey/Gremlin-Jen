@@ -1,4 +1,4 @@
-import { jsx } from '@emotion/core'
+import { jsx, css } from '@emotion/core'
 import React, { useState, useEffect, useRef } from 'react'
 import ReactDOM from 'react-dom'
 import Result from './components/Result'

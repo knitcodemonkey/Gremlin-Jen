@@ -32,7 +32,7 @@ header {
 
 aside,
 .content {
-  padding: 1em;
+  padding: 2em;
   color: var(--black-70);
 }
 
@@ -44,6 +44,7 @@ nav,
 .sidebar > div {
   padding: 1em 0;
   color: var(--black-70);
+  min-width: 200px;
 }
 .optimal {
   border-bottom: 1px solid var(--optimal);

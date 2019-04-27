@@ -1,43 +1,81 @@
 /* @jsx jsx */
-import { jsx } from '@emotion/core'
+import { jsx, css } from '@emotion/core'
 import React from 'react'
 
-import distanceInWordsToNow from 'date-fns/distance_in_words'
-import parse from 'date-fns/parse'
+import distanceInWords from 'date-fns/distance_in_words'
 
 import '../styles.css'
 
 const Package = ({ data, score }) => {
+  const oldness = new Date(data.date)
+  console.log(oldness, distanceInWords(oldness, new Date()))
   return data ? (
-    <article className="package">
-      <section className="info">
-        <div className="name">{data.name}</div>
+    <article
+      css={css`
+        padding: 20px 0;
+        border-bottom: 1px solid grey;
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        line-height: 2em;
+      `}
+    >
+      <section
+        css={css`
+          flex-grow: 1;
+          margin-right: 20px;
+        `}
+      >
+        <div
+          css={css`
+            font-weight: bold;
+          `}
+        >
+          {data.name}
+        </div>
         <div className="description">
           {data.description}
         </div>
         <div className="tagsList">List of tags</div>
         {data.author ? (
-          <div className="author">
+          <div
+            css={css`
+              display: flex;
+              justify-content: start;
+              align-items: center;
+              div {
+                margin-left: 10px;
+              }
+            `}
+          >
             <img
-              className="photo"
+              css={css`
+                width: 16px;
+                height: 16px;
+              `}
               src={`https://avatars.githubusercontent.com/${
                 data.author.username
-              }.png`}
+              }`}
               alt={data.author.name}
             />
             <div className="name">{data.author.name}</div>
+            <div>Published {data.version}</div>
+            <div> • </div>
+            <div>
+              {distanceInWords(oldness, new Date())}
+            </div>
           </div>
         ) : (
           ''
         )}
-        <version>Published {data.version}</version>
-        <div> • </div>
-        <div>
-          {distanceInWordsToNow(new Date(parse(data.date)))}
-        </div>
       </section>
 
-      <section className="rank">
+      <section
+        css={css`
+          flex-grow: 0;
+          margin-left: 20px;
+        `}
+      >
         <div>
           p(opularity){' '}
           <div
