@@ -8,7 +8,6 @@ import './result.css'
 
 const Package = ({ data, score }) => {
   const oldness = new Date(data.date)
-  console.log(oldness, distanceInWords(oldness, new Date()))
   return data ? (
     <article>
       <section

@@ -4,7 +4,7 @@ import Result from './components/Result'
 
 import './styles.css'
 
-function getPackages(str) {
+function useGetPackages(str) {
   const [results, setResults] = useState([])
 
   async function fetchPackages(string = str) {
@@ -29,11 +29,15 @@ function getPackages(str) {
 
 const App = () => {
   const inputVal = useRef(null)
-  const [packages, fetchPackages] = getPackages()
+  const [packages, fetchPackages] = useGetPackages()
 
   return (
     <div className="App" css={{ color: 'darkgray' }}>
       <header>
+        <nav>
+          <div>Some silly Saying</div>
+          <div>Actual nav</div>
+        </nav>
         <form
           onSubmit={e => {
             e.preventDefault()
@@ -49,10 +53,10 @@ const App = () => {
           <input type="submit" value="Submit" />
         </form>
 
-        <nav>
+        <div className="breadcrumbs">
           <div># Packages Found</div>
           <div>Pagination</div>
-        </nav>
+        </div>
       </header>
       <main>
         <aside>
