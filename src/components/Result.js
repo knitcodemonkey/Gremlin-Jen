@@ -16,7 +16,7 @@ const Package = ({ data, score }) => {
           margin-right: 20px;
         `}
       >
-        <div className="bold">{data.name}</div>
+        <h3>{data.name}</h3>
         <div className="description">
           {data.description}
         </div>
@@ -24,19 +24,19 @@ const Package = ({ data, score }) => {
         {data.author ? (
           <div className="stats">
             <img
-              css={css`
-                width: 16px;
-                height: 16px;
-              `}
               src={`https://avatars.githubusercontent.com/${
                 data.author.username
               }`}
               alt={data.author.name}
             />
-            <div className="name">{data.author.name}</div>
-            <div>Published {data.version}</div>
-            <div> • </div>
-            <div>
+            <div className="author-name">
+              {data.author.name}
+            </div>
+            <div className="published">
+              Published {data.version}
+            </div>
+            <div className="published"> • </div>
+            <div className="published">
               {distanceInWords(oldness, new Date())}
             </div>
           </div>

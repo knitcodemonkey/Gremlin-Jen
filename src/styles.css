@@ -27,10 +27,12 @@ aside,
 }
 
 nav,
+.breadcrumbs,
 .sidebar > div {
   padding: 1em 0;
   color: var(--black-70);
   min-width: 200px;
+  display: flex;
 }
 .optimal {
   border-bottom: 1px solid var(--optimal);
@@ -45,12 +47,12 @@ nav,
   border-bottom: 1px solid var(--maintenance);
 }
 
-form,
-nav {
+form {
   display: flex;
 }
 
-nav {
+nav,
+.breadcrumbs {
   justify-content: space-between;
 }
 

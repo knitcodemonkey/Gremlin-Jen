@@ -9,15 +9,32 @@ article {
   line-height: 2em;
 }
 
-.stats {
+article .stats {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
 }
 
-.stats div {
+article .stats div {
   margin-left: 10px;
+  font-family: var(--font-fira);
+  font-size: 14px;
+}
+
+article .stats .published {
+  color: var(--black-50);
+  font-weight: normal;
+}
+
+article .stats .author-name {
+  color: var(--black-90);
+  font-weight: bold;
+}
+
+article .stats img {
+  width: 22px;
+  height: 22px;
 }
 
 .bar {
@@ -40,4 +57,9 @@ article {
 }
 .bar .maintenance {
   border: 1px solid var(--maintenance);
+}
+
+.description {
+  color: var(--black-60);
+  font-size: 16px;
 }
