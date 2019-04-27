@@ -1,0 +1,43 @@
+@import '../variables.css';
+
+article {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--black-10);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  line-height: 2em;
+}
+
+.stats {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.stats div {
+  margin-left: 10px;
+}
+
+.bar {
+  width: 120px;
+  text-align: left;
+  margin-left: 0;
+  font-size: 12px;
+  line-height: 12px;
+}
+
+.bar:first-child {
+  margin-right: 10px;
+}
+
+.bar .quality {
+  border: 1px solid var(--quality);
+}
+.bar .popularity {
+  border: 1px solid var(--popularity);
+}
+.bar .maintenance {
+  border: 1px solid var(--maintenance);
+}
