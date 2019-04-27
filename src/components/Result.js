@@ -1,16 +1,19 @@
 /* @jsx jsx */
+import { jsx } from '@emotion/core'
 import React from 'react'
-import { formatDistance, parse } from 'date-fns'
+
+import distanceInWordsToNow from 'date-fns/distance_in_words'
+import parse from 'date-fns/parse'
 
 import '../styles.css'
 
 const Package = ({ data, score }) => {
-  return data.package ? (
+  return data ? (
     <article className="package">
       <section className="info">
-        <div className="name">{data.package.name}</div>
+        <div className="name">{data.name}</div>
         <div className="description">
-          {data.package.description}
+          {data.description}
         </div>
         <div className="tagsList">List of tags</div>
         {data.author ? (
@@ -18,23 +21,20 @@ const Package = ({ data, score }) => {
             <img
               className="photo"
               src={`https://avatars.githubusercontent.com/${
-                data.package.author.username
+                data.author.username
               }.png`}
-              alt={data.package.author.name}
+              alt={data.author.name}
             />
-            <name>{data.package.author.name}</name>
+            <div className="name">{data.author.name}</div>
           </div>
         ) : (
           ''
         )}
-        <version>Published {data.package.version}</version>
+        <version>Published {data.version}</version>
         <div> • </div>
-        <when>
-          {formatDistance(
-            parse(data.package.date),
-            new Date()
-          )}
-        </when>
+        <div>
+          {distanceInWordsToNow(new Date(parse(data.date)))}
+        </div>
       </section>
 
       <section className="rank">
@@ -42,8 +42,7 @@ const Package = ({ data, score }) => {
           p(opularity){' '}
           <div
             style={{
-              width: `${data.score.detail.popularity *
-                50}px`,
+              width: `${score.detail.popularity * 50}px`,
               color: 'teal'
             }}
           />
@@ -52,7 +51,7 @@ const Package = ({ data, score }) => {
           q(uality){' '}
           <div
             style={{
-              width: `${data.score.detail.quality * 50}px`,
+              width: `${score.detail.quality * 50}px`,
               color: 'purple'
             }}
           />
@@ -61,8 +60,7 @@ const Package = ({ data, score }) => {
           m(aintenance){' '}
           <div
             style={{
-              width: `${data.score.detail.maintenance *
-                50}px`,
+              width: `${score.detail.maintenance * 50}px`,
               color: 'red'
             }}
           />

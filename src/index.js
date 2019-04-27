@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import { jsx } from '@emotion/core'
+import React, { useState, useEffect, useRef } from 'react'
 import ReactDOM from 'react-dom'
 import Result from './components/Result'
 
@@ -7,8 +8,9 @@ import './styles.css'
 function getPackages(str) {
   const [results, setResults] = useState([])
 
-  async function fetchPackages(str) {
-    const API = `https://api.npms.io/v2/search/suggestions?q=${str}`
+  async function fetchPackages(string = str) {
+    const API = `https://api.npms.io/v2/search/suggestions?q=${string}`
+    console.log(API)
     const res = await fetch(API, {
       headers: {
         Accept: 'application/json'
@@ -27,8 +29,8 @@ function getPackages(str) {
 }
 
 const App = () => {
-  const [search, setSearch] = useState('')
-  const [packages, fetchPackages] = getPackages(search)
+  const inputVal = useRef(null)
+  const [packages, fetchPackages] = getPackages()
 
   return (
     <div className="App" css={{ color: 'darkgray' }}>
@@ -36,15 +38,14 @@ const App = () => {
         <form
           onSubmit={e => {
             e.preventDefault()
-            e.stopPropagation()
-            fetchPackages(search)
+            console.log(inputVal.current)
+            fetchPackages(inputVal.current.value)
           }}
         >
           <input
             type="text"
+            ref={inputVal}
             placeholder="Search NPM"
-            value={search}
-            onChange={e => setSearch(e.target.value)}
           />
           <input type="submit" value="Submit" />
         </form>
@@ -66,7 +67,7 @@ const App = () => {
         </aside>
         <section className="content">
           <p>Search Results</p>
-          {packages.length ? (
+          {packages.length > 0 ? (
             packages.map((result, idx) => {
               const key =
                 result.package.name ||
