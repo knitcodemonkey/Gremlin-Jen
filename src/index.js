@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react'
 import ReactDOM from 'react-dom'
 import Result from './components/Result/Result'
 import Pagination from './components/Pagination/Pagination'
-import getUrlVars from './helpers/getUrlVars'
 import { useGetPackages, useSortPackages } from './hooks'
 
 // styles
@@ -11,11 +10,13 @@ import './index.css'
 const App = () => {
   const inputVal = useRef('')
   const [packages, fetchPackages] = useGetPackages(
-    getUrlVars().q
+    new URLSearchParams(document.location.search).get('q')
   )
-  const [sortType, setSortType] = useState([
-    getUrlVars().ranking || ''
-  ])
+  const [sortType, setSortType] = useState(
+    new URLSearchParams(document.location.search).get(
+      'ranking'
+    )
+  )
   const [sortedPackages, sortPackages] = useSortPackages()
 
   useEffect(() => {
@@ -50,7 +51,9 @@ const App = () => {
         <form
           onSubmit={e => {
             e.preventDefault()
-            console.log(inputVal.current)
+            window.location.href = `/search?q=${
+              inputVal.current.value
+            }${sortType ? `&ranking=${sortType}` : ''}`
             fetchPackages(inputVal.current.value)
           }}
         >
@@ -66,7 +69,9 @@ const App = () => {
             id="search"
             type="text"
             ref={inputVal}
-            defaultValue={getUrlVars().q}
+            defaultValue={new URLSearchParams(
+              document.location.search
+            ).get('q')}
             placeholder="Search NPM"
           />
 
@@ -85,7 +90,12 @@ const App = () => {
               <p>Sort Packages</p>
               {sortStats.map(stat => (
                 <button
-                  onClick={() => setSortType(stat)}
+                  onClick={() => {
+                    setSortType(stat)
+                    window.location.href = `/search?q=${
+                      inputVal.current.value
+                    }&ranking=${stat}`
+                  }}
                   className={stat}
                   key={`sortStats_${stat}`}
                 >
@@ -103,12 +113,12 @@ const App = () => {
                   `${result.package.links.npm}_${idx}`
                 return (
                   <Result
-                    highlight={result.highlight}
                     data={result.package}
                     score={result.score}
                     key={key}
                     onClick={val => {
                       inputVal.current.value = val
+                      console.log(sortType)
                       window.location.href = `/search?q=${val}${
                         sortType
                           ? `&ranking=${sortType}`

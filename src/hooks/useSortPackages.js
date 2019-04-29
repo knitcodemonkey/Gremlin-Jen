@@ -32,7 +32,6 @@ const useSortPackages = (pkgs, sortType) => {
 
     setResults(res)
   }
-
   return [results, sortPackages]
 }
 
