@@ -75,7 +75,7 @@ const App = () => {
       </header>
       <main>
         <div className="breadcrumbs">
-          <div>3{packages.length} packages found</div>
+          <div>{packages.length} packages found</div>
           <Pagination />
         </div>
 
