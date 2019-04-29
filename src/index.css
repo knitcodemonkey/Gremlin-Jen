@@ -128,7 +128,8 @@ aside {
 
 .sidebar > button {
   position: relative;
-  padding: 17px 0 7px 0;
+  padding: 8px 0;
+  margin: 8px 0;
   color: var(--black-70);
   width: 100%;
   display: flex;
@@ -138,7 +139,9 @@ aside {
   border: none;
   border-bottom: 1px solid;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 14.8px;
+  background-color: #fff;
+  box-sizing: border-box;
 }
 
 button.optimal {
@@ -177,6 +180,6 @@ button.maintenance {
     justify-content: space-between;
   }
   aside {
-    width: 20%;
+    flex: 0 0 20%;
   }
 }

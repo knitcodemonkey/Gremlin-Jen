@@ -4,7 +4,6 @@ import React from 'react'
 import distanceInWords from 'date-fns/distance_in_words'
 
 import './result.css'
-const searchLink = `https://www.npmjs.com/search`
 
 /**
  * Displays each package result
@@ -12,10 +11,14 @@ const searchLink = `https://www.npmjs.com/search`
  * @param {object} data all the package data
  * @param {object} score the ratings for each package
  */
-const Result = ({ data, score }) => {
+const Result = ({ data, score, onClick }) => {
   const oldness = new Date(data.date)
   const keywords = data.keywords
   const barStats = ['popularity', 'quality', 'maintenance']
+
+  const author = data.author
+    ? data.author
+    : data.maintainers[0]
 
   return (
     <article>
@@ -34,26 +37,26 @@ const Result = ({ data, score }) => {
 
         {keywords
           ? keywords.map(word => (
-              <a
-                href={`${searchLink}?q=keyword:${word}`}
+              <button
+                onClick={() => onClick(word)}
                 key={`keyword_${word}`}
                 className="keyword"
               >
                 {word}
-              </a>
+              </button>
             ))
           : ''}
 
-        {data.author ? (
+        {author ? (
           <div className="stats">
             <img
               src={`https://avatars.githubusercontent.com/${
-                data.author.username
+                author.username
               }`}
-              alt={data.author.name}
+              alt={author.name || author.username}
             />
             <div className="author-name">
-              {data.author.name}
+              {author.name || author.username}
             </div>
             <div className="published">
               Published {data.version}

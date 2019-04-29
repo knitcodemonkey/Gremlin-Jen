@@ -13,7 +13,9 @@ const App = () => {
   const [packages, fetchPackages] = useGetPackages(
     getUrlVars().q
   )
-  const [sortType, setSortType] = useState([''])
+  const [sortType, setSortType] = useState([
+    getUrlVars().ranking || ''
+  ])
   const [sortedPackages, sortPackages] = useSortPackages()
 
   useEffect(() => {
@@ -26,8 +28,6 @@ const App = () => {
     'quality',
     'maintenance'
   ]
-
-  console.log(packages)
 
   return (
     <div className="App" css={{ color: 'darkgray' }}>
@@ -107,6 +107,15 @@ const App = () => {
                     data={result.package}
                     score={result.score}
                     key={key}
+                    onClick={val => {
+                      inputVal.current.value = val
+                      window.location.href = `/search?q=${val}${
+                        sortType
+                          ? `&ranking=${sortType}`
+                          : ''
+                      }`
+                      fetchPackages(val)
+                    }}
                   />
                 )
               })
