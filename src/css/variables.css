@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css?family=Fira+Mono|Source+Sans+Pro|Poppins|Open+Sans:300');
+
+:root {
+  --black-90: rgba(0, 0, 0, 0.9);
+  --black-70: rgba(0, 0, 0, 0.7);
+  --black-60: rgba(0, 0, 0, 0.6);
+  --black-50: rgba(0, 0, 0, 0.5);
+  --black-10: rgba(0, 0, 0, 0.1);
+  --black-5: rgba(0, 0, 0, 0.05);
+  --optimal: #bbb;
+  --popularity: #29abe2;
+  --quality: #8956ff;
+  --maintenance: #cb3837;
+  --max-width: 96em;
+  --font-fira: 'Fira Mono', 'Open Sans', 'Consolas',
+    monospace;
+  --font-source: 'Source Sans Pro', 'Lucida Grande',
+    sans-serif;
+  --font-poppins: 'Poppins', 'Lucida Grande', sans-serif;
+  --bold: 600;
+  --space-small: 12px;
+  --space-large: 32px;
+}
+
+:root {
+  --padding: var(--space-small) var(--space-large);
+}

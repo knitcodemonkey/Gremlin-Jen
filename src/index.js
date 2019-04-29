@@ -1,41 +1,48 @@
 import React, { useState, useEffect, useRef } from 'react'
 import ReactDOM from 'react-dom'
-import Result from './components/Result'
+import Result from './components/Result/Result'
+import Pagination from './components/Pagination/Pagination'
+import getUrlVars from './helpers/getUrlVars'
+import { useGetPackages, useSortPackages } from './hooks'
 
-import './styles.css'
-
-function useGetPackages(str) {
-  const [results, setResults] = useState([])
-
-  async function fetchPackages(string = str) {
-    const API = `https://api.npms.io/v2/search/suggestions?q=${string}`
-    console.log(API)
-    const res = await fetch(API, {
-      headers: {
-        Accept: 'application/json'
-      }
-    })
-
-    const data = await res.json()
-    setResults(data)
-  }
-
-  useEffect(() => {
-    fetchPackages(str)
-  }, [str])
-
-  return [results, fetchPackages]
-}
+// styles
+import './index.css'
 
 const App = () => {
-  const inputVal = useRef(null)
-  const [packages, fetchPackages] = useGetPackages()
+  const inputVal = useRef('')
+  const [packages, fetchPackages] = useGetPackages(
+    getUrlVars().q
+  )
+  const [sortType, setSortType] = useState([''])
+  const [sortedPackages, sortPackages] = useSortPackages()
+
+  useEffect(() => {
+    sortPackages(packages, sortType)
+  }, [packages, sortType])
+
+  const sortStats = [
+    'optimal',
+    'popularity',
+    'quality',
+    'maintenance'
+  ]
 
   return (
     <div className="App" css={{ color: 'darkgray' }}>
       <header>
         <nav>
-          <div>Some silly Saying</div>
+          <div>
+            <span
+              role="img"
+              aria-label="heart"
+              className="emoji-heart"
+            >
+              ❤
+            </span>{' '}
+            <span className="poppins">
+              Null Pointer Micromanagement
+            </span>
+          </div>
           <div>Actual nav</div>
         </nav>
         <form
@@ -45,49 +52,83 @@ const App = () => {
             fetchPackages(inputVal.current.value)
           }}
         >
+          <svg className="icon npm" alt="NPM logo">
+            <use xlinkHref="#npm" />
+          </svg>
+          <label htmlFor="search">
+            <svg className="search" alt="search">
+              <use xlinkHref="#magnify" />
+            </svg>
+          </label>
           <input
+            id="search"
             type="text"
             ref={inputVal}
+            defaultValue={getUrlVars().q}
             placeholder="Search NPM"
           />
+
           <input type="submit" value="Submit" />
         </form>
-
-        <div className="breadcrumbs">
-          <div># Packages Found</div>
-          <div>Pagination</div>
-        </div>
       </header>
       <main>
-        <aside>
-          <div className="sidebar">
-            <div>Sort Packages</div>
-            <div className="optimal">Optimal</div>
-            <div className="popularity">Popularity</div>
-            <div className="quality">Quality</div>
-            <div className="maintenance">Maintenance</div>
-          </div>
-        </aside>
-        <section className="content">
-          <p>Search Results</p>
-          {packages.length > 0 ? (
-            packages.map((result, idx) => {
-              const key =
-                result.package.name ||
-                `${result.package.links.npm}_${idx}`
-              return (
-                <Result
-                  data={result.package}
-                  score={result.score}
-                  key={key}
-                />
-              )
-            })
-          ) : (
-            <article>No results found</article>
-          )}
-        </section>
+        <div className="breadcrumbs">
+          <div>3{packages.length} packages found</div>
+          <Pagination />
+        </div>
+
+        <div className="wrapper">
+          <aside>
+            <div className="sidebar">
+              <p>Sort Packages</p>
+              {sortStats.map(stat => (
+                <button
+                  onClick={() => setSortType(stat)}
+                  className={stat}
+                  key={`sortStats_${stat}`}
+                >
+                  {stat}
+                </button>
+              ))}
+            </div>
+          </aside>
+
+          <section className="content">
+            {packages.length > 0 ? (
+              sortedPackages.map((result, idx) => {
+                const key =
+                  result.package.name ||
+                  `${result.package.links.npm}_${idx}`
+                return (
+                  <Result
+                    data={result.package}
+                    score={result.score}
+                    key={key}
+                  />
+                )
+              })
+            ) : (
+              <article>No results found</article>
+            )}
+            <div className="block">
+              <a href="https://npms.io">
+                powered by npms.io{' '}
+                <span role="img" aria-label="rocket">
+                  🚀
+                </span>
+              </a>
+            </div>
+          </section>
+        </div>
       </main>
+      <footer className="flex">
+        <div className="logo" />
+        <nav className="flex">
+          <div className="col1" />
+          <div className="col1" />
+          <div className="col1" />
+        </nav>
+      </footer>
     </div>
   )
 }

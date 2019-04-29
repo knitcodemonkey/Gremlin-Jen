@@ -106,7 +106,15 @@ Returns
       "scope": "emotion",
       "version": "10.0.1",
       "description": "Shared utilities for emotion primitives and native",
-      "keywords": ["styles", "emotion", "react", "css", "css-in-js", "primitives", "native"],
+      "keywords": [
+        "styles",
+        "emotion",
+        "react",
+        "css",
+        "css-in-js",
+        "primitives",
+        "native"
+      ],
       "date": "2018-12-01T20:39:35.935Z",
       "links": {
         "npm": "https://www.npmjs.com/package/%40emotion%2Fprimitives-core",

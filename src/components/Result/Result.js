@@ -6,9 +6,17 @@ import distanceInWords from 'date-fns/distance_in_words'
 
 import './result.css'
 
-const Package = ({ data, score }) => {
+/**
+ * Displays each package result
+ *
+ * @param {object} data all the package data
+ * @param {object} score the ratings for each package
+ */
+const Result = ({ data, score }) => {
   const oldness = new Date(data.date)
-  return data ? (
+  const barStats = ['popularity', 'quality', 'maintenance']
+
+  return (
     <article>
       <section
         css={css`
@@ -16,10 +24,13 @@ const Package = ({ data, score }) => {
           margin-right: 20px;
         `}
       >
-        <h3>{data.name}</h3>
+        <a href={data.links.npm}>
+          <h3>{data.name}</h3>
+        </a>
         <div className="description">
           {data.description}
         </div>
+
         <div className="tagsList">List of tags</div>
         {data.author ? (
           <div className="stats">
@@ -52,38 +63,29 @@ const Package = ({ data, score }) => {
           margin-top: 20px;
         `}
       >
-        <div className="stats bar">
-          p
-          <div
-            className="bar popularity"
-            css={css`
-              width: ${score.detail.popularity * 50}px;
-            `}
-          />
-        </div>
-        <div className="stats bar">
-          q
-          <div
-            className="bar quality"
-            style={{
-              width: `${score.detail.quality * 100}px`
-            }}
-          />
-        </div>
-        <div className="stats bar">
-          m
-          <div
-            className="maintenance"
-            style={{
-              width: `${score.detail.maintenance * 50}px`
-            }}
-          />
-        </div>
+        {barStats.map(stat => {
+          return (
+            <div
+              className="stats bar"
+              key={`barStats_${stat}`}
+            >
+              {stat.substring(0, 1)}
+              <div
+                className={`bar tooltip ${stat}`}
+                style={{
+                  width: `${score.detail[stat] * 100}px`
+                }}
+              >
+                <span className="tooltiptext">
+                  {(score.detail[stat] * 100).toFixed(3)}
+                </span>
+              </div>
+            </div>
+          )
+        })}
       </section>
     </article>
-  ) : (
-    ''
   )
 }
 
-export default Package
+export default Result
