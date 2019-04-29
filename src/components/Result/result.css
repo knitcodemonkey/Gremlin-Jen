@@ -64,3 +64,11 @@ article .stats img {
   color: var(--black-60);
   font-size: 16px;
 }
+
+.keyword {
+  padding: 4px 8px;
+  background-color: var(--black-5);
+  text-decoration: none;
+  margin-right: 8px;
+  font-size: 14px;
+}

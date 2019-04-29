@@ -20,6 +20,7 @@ h3 {
 a,
 a:visited {
   color: var(--black-90);
+  text-decoration: none;
 }
 
 .App {

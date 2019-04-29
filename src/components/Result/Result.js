@@ -1,10 +1,10 @@
 /* @jsx jsx */
 import { jsx, css } from '@emotion/core'
 import React from 'react'
-
 import distanceInWords from 'date-fns/distance_in_words'
 
 import './result.css'
+const searchLink = `https://www.npmjs.com/search`
 
 /**
  * Displays each package result
@@ -14,6 +14,7 @@ import './result.css'
  */
 const Result = ({ data, score }) => {
   const oldness = new Date(data.date)
+  const keywords = data.keywords
   const barStats = ['popularity', 'quality', 'maintenance']
 
   return (
@@ -31,7 +32,18 @@ const Result = ({ data, score }) => {
           {data.description}
         </div>
 
-        <div className="tagsList">List of tags</div>
+        {keywords
+          ? keywords.map(word => (
+              <a
+                href={`${searchLink}?q=keyword:${word}`}
+                key={`keyword_${word}`}
+                className="keyword"
+              >
+                {word}
+              </a>
+            ))
+          : ''}
+
         {data.author ? (
           <div className="stats">
             <img

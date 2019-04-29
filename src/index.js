@@ -27,6 +27,8 @@ const App = () => {
     'maintenance'
   ]
 
+  console.log(packages)
+
   return (
     <div className="App" css={{ color: 'darkgray' }}>
       <header>
@@ -101,6 +103,7 @@ const App = () => {
                   `${result.package.links.npm}_${idx}`
                 return (
                   <Result
+                    highlight={result.highlight}
                     data={result.package}
                     score={result.score}
                     key={key}
