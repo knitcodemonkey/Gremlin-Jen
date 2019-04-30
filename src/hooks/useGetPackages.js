@@ -8,7 +8,6 @@ const useGetPackages = str => {
   const [results, setResults] = useState([])
 
   async function fetchPackages(string = str) {
-    console.log(string)
     /** API for pulling 25 suggested packages */
     const API = `https://api.npms.io/v2/search/suggestions?q=${string}`
 
@@ -18,6 +17,7 @@ const useGetPackages = str => {
       }
     })
 
+    // Sort data by popularity by default
     const data = await res.json()
     // https://flaviocopes.com/how-to-sort-array-of-objects-by-property-javascript/
     data.sort((a, b) =>

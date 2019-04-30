@@ -21,7 +21,13 @@ const App = () => {
 
   useEffect(() => {
     sortPackages(packages, sortType)
-  }, [packages, sortType])
+  }, [packages, sortType, sortPackages])
+
+  const updateURL = () => {
+    window.location.href = `/search?q=${
+      inputVal.current.value
+    }${sortType ? `&ranking=${sortType}` : ''}`
+  }
 
   const sortStats = [
     'optimal',
@@ -51,9 +57,6 @@ const App = () => {
         <form
           onSubmit={e => {
             e.preventDefault()
-            window.location.href = `/search?q=${
-              inputVal.current.value
-            }${sortType ? `&ranking=${sortType}` : ''}`
             fetchPackages(inputVal.current.value)
           }}
         >
@@ -92,9 +95,7 @@ const App = () => {
                 <button
                   onClick={() => {
                     setSortType(stat)
-                    window.location.href = `/search?q=${
-                      inputVal.current.value
-                    }&ranking=${stat}`
+                    updateURL()
                   }}
                   className={stat}
                   key={`sortStats_${stat}`}
@@ -118,12 +119,7 @@ const App = () => {
                     key={key}
                     onClick={val => {
                       inputVal.current.value = val
-                      console.log(sortType)
-                      window.location.href = `/search?q=${val}${
-                        sortType
-                          ? `&ranking=${sortType}`
-                          : ''
-                      }`
+                      updateURL()
                       fetchPackages(val)
                     }}
                   />
