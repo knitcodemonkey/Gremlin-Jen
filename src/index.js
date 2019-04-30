@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
 import ReactDOM from 'react-dom'
 import Result from './components/Result/Result'
-import Pagination from './components/Pagination/Pagination'
 import { useGetPackages, useSortPackages } from './hooks'
 
 // styles
+import './css/variables.css'
+import './css/styles.css'
 import './index.css'
 
 const App = () => {
@@ -95,7 +96,6 @@ const App = () => {
         <div className="breadcrumbs">
           <div className="wrapper">
             <div>{packages.length} packages found</div>
-            <Pagination />
           </div>
         </div>
 

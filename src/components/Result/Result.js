@@ -3,6 +3,8 @@ import { jsx, css } from '@emotion/core'
 import React from 'react'
 import distanceInWords from 'date-fns/distance_in_words'
 
+import '../../css/variables.css'
+import '../../css/tooltip.css'
 import './result.css'
 
 /**
