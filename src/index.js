@@ -1,4 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback
+} from 'react'
 import ReactDOM from 'react-dom'
 import Result from './components/Result/Result'
 import { useGetPackages, useSortPackages } from './hooks'
@@ -9,23 +14,30 @@ import './css/styles.css'
 import './index.css'
 
 const App = () => {
+  // The value of the input field
   const inputVal = useRef('')
+
+  // Use custom useGetPackages to get the list of packages
+  // The default parameter is pulled from the URL
   const [packages, fetchPackages] = useGetPackages(
     new URLSearchParams(document.location.search).get('q')
   )
+
+  // Set the sort type of the list [optimal, popularity, quality, maintenance]
   const [sortType, setSortType] = useState(
     new URLSearchParams(document.location.search).get(
       'ranking'
-    )
+    ) || 'optimal'
   )
-  const [sortedPackages, sortPackages] = useSortPackages()
 
-  useEffect(() => {
-    sortPackages(packages, sortType)
-    updateURL()
-  }, [packages, sortType])
+  // the sorted list of packages
+  const [sortedPackages, sortPackages] = useSortPackages(
+    packages,
+    sortType
+  )
 
-  const updateURL = () => {
+  // Make the URL match the parameters for easy copy/paste
+  const updateURL = useCallback(() => {
     window.history.pushState(
       {},
       null,
@@ -33,9 +45,17 @@ const App = () => {
         inputVal.current.value
       }&ranking=${sortType}`
     )
-  }
+  }, [inputVal, sortType])
 
-  const sortStats = [
+  useEffect(() => {
+    if (packages.length > 0) {
+      sortPackages(packages, sortType)
+      updateURL()
+    }
+  }, [packages, sortType, setSortType])
+
+  // List of possible sort types
+  const sortTypeOptions = [
     'optimal',
     'popularity',
     'quality',
@@ -45,6 +65,7 @@ const App = () => {
   return (
     <div className="App" css={{ color: 'darkgray' }}>
       <header>
+        {/* Nav above search bar */}
         <nav>
           <div className="wrapper">
             <div className="flex">
@@ -54,7 +75,7 @@ const App = () => {
                 className="emoji-heart"
               >
                 ❤
-              </span>{' '}
+              </span>
               <span className="poppins">
                 Gremlin is awesome
               </span>
@@ -63,6 +84,7 @@ const App = () => {
           </div>
         </nav>
 
+        {/* search bar */}
         <form
           onSubmit={e => {
             e.preventDefault()
@@ -92,24 +114,28 @@ const App = () => {
           </div>
         </form>
       </header>
+
+      {/* Content below header */}
       <main>
+        {/* Breadcrumbs */}
         <div className="breadcrumbs">
           <div className="wrapper">
-            <div>{packages.length} packages found</div>
+            <div>{packages.length || 0} packages found</div>
           </div>
         </div>
 
         <div className="mainWrapper">
+          {/* sidebar */}
           <aside>
             <div className="sidebar">
               <p>Sort Packages</p>
-              {sortStats.map(stat => (
+              {sortTypeOptions.map(stat => (
                 <button
                   onClick={() => {
                     setSortType(stat)
                   }}
                   className={stat}
-                  key={`sortStats_${stat}`}
+                  key={`sortTypeOptions_${stat}`}
                 >
                   {stat}
                 </button>
@@ -117,6 +143,7 @@ const App = () => {
             </div>
           </aside>
 
+          {/* list of packages */}
           <section className="content">
             {packages.length > 0 ? (
               sortedPackages.map((result, idx) => {
@@ -139,17 +166,11 @@ const App = () => {
             ) : (
               <article>No results found</article>
             )}
-            <div className="block">
-              <a href="https://npms.io">
-                powered by npms.io{' '}
-                <span role="img" aria-label="rocket">
-                  🚀
-                </span>
-              </a>
-            </div>
           </section>
         </div>
       </main>
+
+      {/* footer */}
       <footer className="flex">
         <div className="logo" />
         <nav className="flex">

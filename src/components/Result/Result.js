@@ -38,11 +38,11 @@ const Result = ({ data, score, onClick }) => {
         </div>
 
         {keywords
-          ? keywords.map(word => (
+          ? keywords.map((word, idx) => (
               <button
                 type="button"
                 onClick={() => onClick(word)}
-                key={`${data.name}_keyword_${word}`}
+                key={`${data.name}_${idx}_keyword_${word}`}
                 className="keyword"
               >
                 {word}

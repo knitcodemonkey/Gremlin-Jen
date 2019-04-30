@@ -3,12 +3,12 @@ import { useState } from 'react'
 /**
  * Sorts an array of package objects
  *
- * @param  {array} pkgs array of package objects
+ * @param  {array} packages array of package objects
  * @param  {string || undefined} sortType
  * @return
  */
-const useSortPackages = (pkgs, sortType) => {
-  const [results, setResults] = useState([])
+const useSortPackages = packages => {
+  const [results, setResults] = useState(packages)
 
   function sortPackages(pkgs, sortType) {
     const res = pkgs.sort((a, b) => {
@@ -26,12 +26,13 @@ const useSortPackages = (pkgs, sortType) => {
             ? 1
             : -1
         default:
-          return a.searchScore < b.searchScore ? 1 : -1
+          return a.searchScore < b.searchScore ? -1 : 1
       }
     })
 
     setResults(res)
   }
+
   return [results, sortPackages]
 }
 

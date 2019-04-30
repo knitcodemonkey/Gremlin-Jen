@@ -7,9 +7,12 @@ import { useState, useEffect } from 'react'
 const useGetPackages = str => {
   const [results, setResults] = useState([])
 
-  async function fetchPackages(string = str) {
+  async function fetchPackages(string) {
     /** API for pulling 25 suggested packages */
-    const API = `https://api.npms.io/v2/search/suggestions?q=${string}`
+
+    const API = `https://api.npms.io/v2/search/suggestions${
+      string ? `?q=${string}` : ''
+    }`
 
     const res = await fetch(API, {
       headers: {
