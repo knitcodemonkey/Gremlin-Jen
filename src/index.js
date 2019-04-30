@@ -40,54 +40,61 @@ const App = () => {
     <div className="App" css={{ color: 'darkgray' }}>
       <header>
         <nav>
-          <div>
-            <span
-              role="img"
-              aria-label="heart"
-              className="emoji-heart"
-            >
-              ❤
-            </span>{' '}
-            <span className="poppins">
-              Null Pointer Micromanagement
-            </span>
+          <div className="wrapper">
+            <div className="flex">
+              <span
+                role="img"
+                aria-label="heart"
+                className="emoji-heart"
+              >
+                ❤
+              </span>{' '}
+              <span className="poppins">
+                Gremlin is awesome
+              </span>
+            </div>
+            <div>Navigation</div>
           </div>
-          <div>Actual nav</div>
         </nav>
+
         <form
           onSubmit={e => {
             e.preventDefault()
             fetchPackages(inputVal.current.value)
           }}
         >
-          <svg className="icon npm" alt="NPM logo">
-            <use xlinkHref="#npm" />
-          </svg>
-          <label htmlFor="search">
-            <svg className="search" alt="search">
-              <use xlinkHref="#magnify" />
+          <div className="wrapper">
+            <svg className="icon npm" alt="NPM logo">
+              <use xlinkHref="#npm" />
             </svg>
-          </label>
-          <input
-            id="search"
-            type="text"
-            ref={inputVal}
-            defaultValue={new URLSearchParams(
-              document.location.search
-            ).get('q')}
-            placeholder="Search NPM"
-          />
+            <label htmlFor="search">
+              <svg className="search" alt="search">
+                <use xlinkHref="#magnify" />
+              </svg>
+            </label>
+            <input
+              id="search"
+              type="text"
+              ref={inputVal}
+              defaultValue={new URLSearchParams(
+                document.location.search
+              ).get('q')}
+              placeholder="Search NPM"
+            />
 
-          <input type="submit" value="Submit" />
+            <input type="submit" value="Submit" />
+          </div>
         </form>
       </header>
       <main>
         <div className="breadcrumbs">
-          <div>{packages.length} packages found</div>
-          <Pagination />
+          <div className="wrapper">
+            <div>{packages.length} packages found</div>
+            <Pagination />
+          </div>
         </div>
 
-        <div className="wrapper">
+        <div className="mainWrapper">
           <aside>
             <div className="sidebar">
               <p>Sort Packages</p>
