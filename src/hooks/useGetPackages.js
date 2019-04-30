@@ -20,11 +20,6 @@ const useGetPackages = str => {
     // Sort data by popularity by default
     const data = await res.json()
     // https://flaviocopes.com/how-to-sort-array-of-objects-by-property-javascript/
-    data.sort((a, b) =>
-      a.score.detail.popularity > b.score.detail.popularity
-        ? -1
-        : 1
-    )
     setResults(data)
   }
 

@@ -21,12 +21,17 @@ const App = () => {
 
   useEffect(() => {
     sortPackages(packages, sortType)
-  }, [packages, sortType, sortPackages])
+    updateURL()
+  }, [packages, sortType])
 
   const updateURL = () => {
-    window.location.href = `/search?q=${
-      inputVal.current.value
-    }${sortType ? `&ranking=${sortType}` : ''}`
+    window.history.pushState(
+      {},
+      null,
+      `/search?q=${
+        inputVal.current.value
+      }&ranking=${sortType}`
+    )
   }
 
   const sortStats = [
@@ -102,7 +107,6 @@ const App = () => {
                 <button
                   onClick={() => {
                     setSortType(stat)
-                    updateURL()
                   }}
                   className={stat}
                   key={`sortStats_${stat}`}
@@ -126,8 +130,8 @@ const App = () => {
                     key={key}
                     onClick={val => {
                       inputVal.current.value = val
-                      updateURL()
                       fetchPackages(val)
+                      updateURL()
                     }}
                   />
                 )
